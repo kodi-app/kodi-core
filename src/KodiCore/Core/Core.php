@@ -13,6 +13,7 @@ use KodiCore\Application;
 use KodiCore\Core\Module\Module;
 use KodiCore\Core\Module\ModuleParams;
 use KodiCore\Core\Router\RouterInterface;
+use KodiCore\Core\Router\SimpleRouter;
 use KodiCore\Exception\CoreException;
 use KodiCore\Hook\HookInterface;
 use KodiCore\Request\Request;
@@ -73,9 +74,15 @@ class Core
 
         // Run router
         $routerConfiguration = $kodiConf->getRouterConfiguration();
-        $routerClassName = $routerConfiguration["class_name"];
-        /** @var RouterInterface $router */
-        $this->router = new $routerClassName($routerConfiguration["parameters"]);
+        if(!isset($routerConfiguration["class_name"])) {
+            $this->router = new SimpleRouter([]);
+        }
+        else {
+            $routerClassName = $routerConfiguration["class_name"];
+            if(!isset($routerConfiguration["parameters"])) $routerConfiguration["parameters"] = [];
+            /** @var RouterInterface $router */
+            $this->router = new $routerClassName($routerConfiguration["parameters"]);
+        }
         $this->router->setRoutes($kodiConf->getRoutesConfiguration());
         $routerResult = $this->router->findRoute($request->getHttpMethod(),$request->getUri());
         $parts = $controllerParts = explode("::", $routerResult["handler"]);

@@ -110,11 +110,11 @@ class KodiConf
 
     /**
      * @return array
-     * @throws ConfigurationException
      */
     public function getRouterConfiguration(): array {
-        if(!isset($this->monolithicConfiguration["router"]))
-            throw new ConfigurationException("Missing router configuration");
+        if(isset($this->monolithicConfiguration["router"])) {
+            return [];
+        }
         return $this->monolithicConfiguration["router"];
     }
 
