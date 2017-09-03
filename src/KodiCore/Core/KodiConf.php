@@ -41,7 +41,7 @@ class KodiConf
      * @throws ConfigurationException
      */
     public function getEnvironmentSettings(): array {
-        if(!isset($this->monolithicConfiguration["environment"]))
+        if(!isset($this->monolithicConfiguration[self::ENVIRONMENT]))
             throw new ConfigurationException("Missing environment configuration");
         return $this->monolithicConfiguration["environment"];
     }
@@ -51,7 +51,7 @@ class KodiConf
      * @throws ConfigurationException
      */
     public function getHooksConfiguration(): array {
-        if(!isset($this->monolithicConfiguration["hooks"]))
+        if(!isset($this->monolithicConfiguration[self::HOOKS]))
             throw new ConfigurationException("Missing hooks configuration");
         return $this->monolithicConfiguration["hooks"];
     }
@@ -61,7 +61,7 @@ class KodiConf
      * @throws ConfigurationException
      */
     public function getServicesConfiguration(): array {
-        if(!isset($this->monolithicConfiguration["services"]))
+        if(!isset($this->monolithicConfiguration[self::SERVICES]))
             throw new ConfigurationException("Missing services configuration");
         return $this->monolithicConfiguration["services"];
     }
@@ -71,7 +71,7 @@ class KodiConf
      * @throws ConfigurationException
      */
     public function getModulesConfiguration(): array {
-        if(!isset($this->monolithicConfiguration["modules"]))
+        if(!isset($this->monolithicConfiguration[self::MODULES]))
             throw new ConfigurationException("Missing modules configuration");
         return $this->monolithicConfiguration["modules"];
     }
@@ -84,9 +84,9 @@ class KodiConf
         $routes = [];
 
         // Load project level routes
-        if(!isset($this->monolithicConfiguration["routes"]))
+        if(!isset($this->monolithicConfiguration[self::ROUTES]))
             throw new ConfigurationException("Missing routes configuration");
-        $projectRoutes = $this->monolithicConfiguration["routes"];
+        $projectRoutes = $this->monolithicConfiguration[self::ROUTES];
         foreach ($projectRoutes as &$projectRoute) {
             $projectRoute["handler"] = ProjectModule::class."::".$projectRoute["handler"];
         }
@@ -112,10 +112,10 @@ class KodiConf
      * @return array
      */
     public function getRouterConfiguration(): array {
-        if(isset($this->monolithicConfiguration["router"])) {
+        if(isset($this->monolithicConfiguration[self::ROUTER])) {
             return [];
         }
-        return $this->monolithicConfiguration["router"];
+        return $this->monolithicConfiguration[self::ROUTER];
     }
 
     public function getErrorResponseHandler(): ErrorResponse {
