@@ -31,6 +31,11 @@ class Application implements \ArrayAccess
     private static $instance = null;
 
     /**
+     * @var Core
+     */
+    private $core;
+
+    /**
      * @var KodiConf
      */
     private $kodiConfiguration;
@@ -78,8 +83,8 @@ class Application implements \ArrayAccess
             $this->initializeConfiguration($kodiConf);
 
             // Process request
-            $core = new Core($this);
-            $module = $core->processRequest($kodiConf,$request);
+            $this->core = new Core($this);
+            $module = $this->core->processRequest($kodiConf,$request);
 
             // Run the appropriate module and print result
             print $module->run();
@@ -160,5 +165,13 @@ class Application implements \ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->pimpleContainer[$offset]);
+    }
+
+    /**
+     * @return Core
+     */
+    public function getCore(): Core
+    {
+        return $this->core;
     }
 }

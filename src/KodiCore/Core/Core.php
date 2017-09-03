@@ -26,6 +26,11 @@ class Core
     private $registeredHooks;
 
     /**
+     * @var RouterInterface
+     */
+    private $router = null;
+
+    /**
      * Core constructor.
      * @param Application $application
      * @throws CoreException
@@ -70,9 +75,9 @@ class Core
         $routerConfiguration = $kodiConf->getRouterConfiguration();
         $routerClassName = $routerConfiguration["class_name"];
         /** @var RouterInterface $router */
-        $router = new $routerClassName($routerConfiguration["parameters"]);
-        $router->setRoutes($kodiConf->getRoutesConfiguration());
-        $routerResult = $router->findRoute($request->getHttpMethod(),$request->getUri());
+        $this->router = new $routerClassName($routerConfiguration["parameters"]);
+        $this->router->setRoutes($kodiConf->getRoutesConfiguration());
+        $routerResult = $this->router->findRoute($request->getHttpMethod(),$request->getUri());
         $parts = $controllerParts = explode("::", $routerResult["handler"]);
 
 
@@ -88,4 +93,14 @@ class Core
 
         return $module;
     }
+
+    /**
+     * @return RouterInterface
+     */
+    public function getRouter(): RouterInterface
+    {
+        return $this->router;
+    }
+
+
 }
