@@ -72,7 +72,7 @@ class KodiConf
      */
     public function getModulesConfiguration(): array {
         if(!isset($this->monolithicConfiguration[self::MODULES]))
-            throw new ConfigurationException("Missing modules configuration");
+            return [];
         return $this->monolithicConfiguration["modules"];
     }
 
