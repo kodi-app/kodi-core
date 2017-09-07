@@ -95,7 +95,9 @@ class Core
         $module->setControllerName($parts[1]);
         $module->setMethod($parts[2]);
         $module->setUrlParams($routerResult["params"]);
-        ModuleParams::setParams($kodiConf->getModulesConfiguration()[$moduleClassName]);
+        if(isset($kodiConf->getModulesConfiguration()[$moduleClassName])) {
+            ModuleParams::setParams($kodiConf->getModulesConfiguration()[$moduleClassName]);
+        }
         $module->before();
 
         return $module;

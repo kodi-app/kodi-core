@@ -63,6 +63,14 @@ class Application implements \ArrayAccess
     }
 
     /**
+     * @param string $key
+     * @return mixed
+     */
+    public static function getEnv(string $key) {
+        return self::getInstance()["environment"][$key];
+    }
+
+    /**
      * Application constructor.
      */
     protected function __construct()
@@ -122,7 +130,7 @@ class Application implements \ArrayAccess
      * @param KodiConf $kodiConf
      * @throws ConfigurationException
      */
-    public function initializeConfiguration(KodiConf $kodiConf): void {
+    private function initializeConfiguration(KodiConf $kodiConf): void {
         $this->kodiConfiguration                = $kodiConf;
         $this->pimpleContainer["environment"]   = $kodiConf->getEnvironmentSettings();
         foreach ($kodiConf->getServicesConfiguration() as $service) {

@@ -14,7 +14,7 @@ class ProjectModule extends Module
 
     public function getControllerNamespace(): string
     {
-        return Application::getInstance()["controller_namespace"];
+        return Application::getEnv("controller_namespace");
     }
 
     public function getRoutes(): array
