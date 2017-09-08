@@ -59,7 +59,15 @@ class Application implements \ArrayAccess
      * @return string
      */
     public static function getEnvMode(): string {
-        return self::getInstance()["environment"]["mode"];
+        return self::get("environment")["mode"];
+    }
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public static function get($key) {
+        return Application::getInstance()[$key];
     }
 
     /**
