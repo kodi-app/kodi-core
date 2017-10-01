@@ -40,6 +40,7 @@ abstract class HookInterface
      * @return mixed
      */
     public function getParameterByKey(string $key) {
+        if(!isset($this->parameters[$key])) return null;
         return $this->parameters[$key];
     }
 }

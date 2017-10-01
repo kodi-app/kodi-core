@@ -51,8 +51,10 @@ class KodiConf
      * @throws ConfigurationException
      */
     public function getHooksConfiguration(): array {
-        if(!isset($this->monolithicConfiguration[self::HOOKS]))
-            throw new ConfigurationException("Missing hooks configuration");
+        if(!isset($this->monolithicConfiguration[self::HOOKS])){
+            // Log debug "Missing hooks configuration"
+            return [];
+        }
         return $this->monolithicConfiguration["hooks"];
     }
 
@@ -61,8 +63,10 @@ class KodiConf
      * @throws ConfigurationException
      */
     public function getServicesConfiguration(): array {
-        if(!isset($this->monolithicConfiguration[self::SERVICES]))
-            throw new ConfigurationException("Missing services configuration");
+        if(!isset($this->monolithicConfiguration[self::SERVICES])){
+            // Log debug "Missing services configuration"
+            return [];
+        }
         return $this->monolithicConfiguration["services"];
     }
 
@@ -112,7 +116,7 @@ class KodiConf
      * @return array
      */
     public function getRouterConfiguration(): array {
-        if(isset($this->monolithicConfiguration[self::ROUTER])) {
+        if(!isset($this->monolithicConfiguration[self::ROUTER])) {
             return [];
         }
         return $this->monolithicConfiguration[self::ROUTER];
